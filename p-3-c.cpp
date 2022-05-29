@@ -1,40 +1,40 @@
-//Éú²úÕßÏû·ÑÕßÎÊÌâ ------ Éú²úÕßÏû·ÑÕßÒ»Ìå
+//ç”Ÿäº§è€…æ¶ˆè´¹è€…é—®é¢˜ ------ ç”Ÿäº§è€…æ¶ˆè´¹è€…ä¸€ä½“
 
 typedef int item;
 typedef int semaphore;
 
 const int MAX_N = 1e3 + 10;
 int n = MAX_N - 1;
-int cnt_buf = 2;//»º³åÇøÊıÁ¿
+int cnt_buf = 2;//ç¼“å†²åŒºæ•°é‡
 struct Buf {
 	Buf() {
 		empty = n;
 		full = 0;
 		in = out = 0;
 	}
-	item buffer[MAX_N];//»º³åÇø
+	item buffer[MAX_N];//ç¼“å†²åŒº
 	semaphore mutex, empty, full;
 	int in, out;
-} buf[cnt_buf];//»º³åÇøĞÅÏ¢
+} buf[cnt_buf];//ç¼“å†²åŒºä¿¡æ¯
 
-int cnt_pc = ¡°Éú²úºÍÏû·Ñ¡±ÕßµÄÊıÁ¿;
-int cnt_block = 0;//¿ØÖÆ×èÈû½ø³ÌµÄÊıÁ¿£¬·ÀÖ¹ËÀËø
+int cnt_pc = â€œç”Ÿäº§å’Œæ¶ˆè´¹â€è€…çš„æ•°é‡;
+int cnt_block = 0;//æ§åˆ¶é˜»å¡è¿›ç¨‹çš„æ•°é‡ï¼Œé˜²æ­¢æ­»é”
 
 void producer_and_consumer() {
 	do {
-		¾ö¶¨Éú²ú»¹ÊÇÏû·Ñ£¬ ÈôÉú²ú£¬Ôòflag = 1£¬ ·ñÔò flag = 0;
+		å†³å®šç”Ÿäº§è¿˜æ˜¯æ¶ˆè´¹ï¼Œ è‹¥ç”Ÿäº§ï¼Œåˆ™flag = 1ï¼Œ å¦åˆ™ flag = 0;
 		if(flag = 1) {
-			Éú²úm¸ö²úÆ·nextp
-			//ÅĞ¶ÏÄÜ·ñ·ÅÏÂm¸ö²úÆ·
+			ç”Ÿäº§mä¸ªäº§å“nextp
+			//åˆ¤æ–­èƒ½å¦æ”¾ä¸‹mä¸ªäº§å“
 			int empty = 0;
 			for(int i = 0; i < cnt_buf; ++i) empty += buf[i].empty;
 			if(m > empty) {
 				if(cnt_block + 1 < cnt_pc) {
-					°Ñ¸Ã½ø³Ì·ÅÈë×èÈû¶ÓÁĞ;
+					æŠŠè¯¥è¿›ç¨‹æ”¾å…¥é˜»å¡é˜Ÿåˆ—;
 					cnt_block += 1;
-				} else continue; //±£Ö¤ÖÁÉÙÓĞÒ»¸öÏû·ÑÕß
+				} else continue; //ä¿è¯è‡³å°‘æœ‰ä¸€ä¸ªæ¶ˆè´¹è€…
 			}
-			int cnt[cnt_buf] = {0};//¼ÇÂ¼Ã¿¸ö»º³åÇøÓ¦ÓÃµôµÄitemÊıÁ¿
+			int cnt[cnt_buf] = {0};//è®°å½•æ¯ä¸ªç¼“å†²åŒºåº”ç”¨æ‰çš„itemæ•°é‡
 			for(int i = 0; i < cnt_buf; ++i) {
 				if(m <= buf[i].empty) {
 					cnt[i] = m;
@@ -60,14 +60,14 @@ void producer_and_consumer() {
 				Ssignal(buf[i].mutex, 1,1, buf[i].full, cnt[i], cnt[i]);
 			}
 		} else {
-			//Ïû·Ñt¸ö²úÆ·
+			//æ¶ˆè´¹tä¸ªäº§å“
 			int full = 0;
 			for(int i = 0; i < cnt_buf; ++i) full += buf[i].full;
 			if(t > full) {
 				if(cnt_block + 1 < cnt_pc) {
-					°Ñ¸Ã½ø³Ì·ÅÈë×èÈû¶ÓÁĞ;
+					æŠŠè¯¥è¿›ç¨‹æ”¾å…¥é˜»å¡é˜Ÿåˆ—;
 					cnt_block += 1;
-				} else continue; //±£Ö¤ÖÁÉÙÓĞÒ»¸öÉú²úÕß£»
+				} else continue; //ä¿è¯è‡³å°‘æœ‰ä¸€ä¸ªç”Ÿäº§è€…ï¼›
 			}
 			int cnt[cnt_buf] = {0};
 			for(int i = 0; i < cnt_buf; ++i) {

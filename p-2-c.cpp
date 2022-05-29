@@ -1,31 +1,31 @@
-//Éú²úÕßÏû·ÑÕßÎÊÌâ ------Ë«»º³å
+//ç”Ÿäº§è€…æ¶ˆè´¹è€…é—®é¢˜ ------åŒç¼“å†²
 
 typedef int item;
 typedef int semaphore;
 
 const int MAX_N = 1e3 + 10;
 int n = MAX_N - 1;
-int cnt_buf = 2;//»º³åÇøÊıÁ¿ 
+int cnt_buf = 2;//ç¼“å†²åŒºæ•°é‡ 
 struct Buf {
 	Buf() {
 		empty = n;
 		full = 0;
 		in = out = 0;
 	}
-	item buffer[MAX_N];//»º³åÇø 
+	item buffer[MAX_N];//ç¼“å†²åŒº 
 	semaphore mutex, empty, full;
 	int in, out;
-} buf[cnt_buf];//»º³åÇøĞÅÏ¢
+} buf[cnt_buf];//ç¼“å†²åŒºä¿¡æ¯
 
 void producer() {
 	do {
-		Éú²úm¸ö²úÆ·nextp
+		ç”Ÿäº§mä¸ªäº§å“nextp
 		
-		//ÅĞ¶ÏÄÜ·ñ·ÅÏÂm¸ö²úÆ· 
+		//åˆ¤æ–­èƒ½å¦æ”¾ä¸‹mä¸ªäº§å“ 
 		int empty = 0;
 		for(int i = 0; i < cnt_buf; ++i) empty += buf[i].empty
-		if(m > empty) °Ñ¸Ã½ø³Ì·ÅÈë×èÈû¶ÓÁĞ 
-		int cnt[cnt_buf] = {0};//¼ÇÂ¼Ã¿¸ö»º³åÇøÓ¦ÓÃµôµÄitemÊıÁ¿ 
+		if(m > empty) æŠŠè¯¥è¿›ç¨‹æ”¾å…¥é˜»å¡é˜Ÿåˆ— 
+		int cnt[cnt_buf] = {0};//è®°å½•æ¯ä¸ªç¼“å†²åŒºåº”ç”¨æ‰çš„itemæ•°é‡ 
 		for(int i = 0; i < cnt_buf; ++i) {
 			if(m <= buf[i].empty) {
 				cnt[i] = m;
@@ -54,11 +54,11 @@ void producer() {
 }
 
 void consumer() {
-	//Ïû·Ñt¸ö²úÆ· 
+	//æ¶ˆè´¹tä¸ªäº§å“ 
 	do {
 		int full = 0;
 		for(int i = 0; i < cnt_buf; ++i) full += buf[i].full;
-		if(t > full) °Ñ¸Ã½ø³Ì·ÅÈë×èÈû¶ÓÁĞ
+		if(t > full) æŠŠè¯¥è¿›ç¨‹æ”¾å…¥é˜»å¡é˜Ÿåˆ—
 		int cnt[cnt_buf] = {0};
 		for(int i = 0; i < cnt_buf; ++i) {
 			if(t <= buf[i].full) {
