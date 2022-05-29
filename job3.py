@@ -2,34 +2,6 @@ import math
 import random
 from functools import wraps
 
-# class Decorator:
-#     def __init__(self, func):
-#         self.acc = 0
-#         self.mcc = 0
-#         self.func = func
-#
-#     def __call__(self, *args, **kwargs):
-#
-#         self.func(*args, **kwargs)
-#         resultList = self.func(*args, **kwargs)
-#         total = len(resultList)
-#         TP = TN = FP = FN = 0
-#         for e in resultList:
-#             if (e[0] is True) and (e[1] is True):
-#                 TP += 1
-#             elif (e[0] is True) and (e[1] is False):
-#                 FN += 1
-#             elif (e[0] is False) and (e[1] is True):
-#                 FP += 1
-#             elif (e[0] is False) and (e[1] is False):
-#                 TN += 1
-#             else:
-#                 pass
-#         self.acc = (TP + TN) / total
-#         print("ACC : %f" % self.acc)
-#         self.mcc = (TP * TN - FP * FN) / math.sqrt((TP + FP) * (TP + FN) * (TN + FP) * (TN + FN))
-#         print("MCC : %f" % self.mcc)
-#         return resultList
 
 #flag can be ACC or MCC
 def decorateWith(flag):
@@ -54,7 +26,8 @@ def decorateWith(flag):
                 acc = (TP + TN) / total
                 print("ACC : %f" % acc)
             elif flag == "MCC":
-                mcc = (TP * TN - FP * FN) / math.sqrt((TP + FP) * (TP + FN) * (TN + FP) * (TN + FN))
+                denominator = math.sqrt((TP + FP) * (TP + FN) * (TN + FP) * (TN + FN))
+                mcc = (TP * TN - FP * FN) / denominator
                 print("MCC : %f" % mcc)
             else:
                 pass
@@ -62,7 +35,6 @@ def decorateWith(flag):
         return wrapper
     return decorator
 
-# @Decorator
 @decorateWith("MCC")
 @decorateWith("ACC")
 def generateRandom(**kargs):
